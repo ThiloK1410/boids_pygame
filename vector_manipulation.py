@@ -32,6 +32,7 @@ def add(vectors):
     return temp
 
 
+# the first vector gets subtracted by all others
 def subtract(vectors):
     vec_len = None
     for vector in vectors:
@@ -52,4 +53,11 @@ def multiply(vector, factor):
     temp = []
     for i, x in enumerate(vector):
         temp.append(vector[i] * factor)
+    return temp
+
+
+def divide(vector, dividend):
+    temp = []
+    for i, x in enumerate(vector):
+        temp.append(vector[i] / dividend)
     return temp

@@ -2,6 +2,7 @@ import random
 import pygame
 from pygame.locals import *
 from Circle import *
+from Food import *
 
 
 class App:
@@ -24,8 +25,12 @@ class App:
         if event.type == pygame.QUIT:
             self._running = False
         if event.type == pygame.KEYDOWN:
-            ran_pos = [random.randint(0, self.size[0]), random.randint(0, self.size[1])]
-            self.actors.append(Circle(self._display_surf, ran_pos[0], ran_pos[1], 8, 4))
+            if event.key == pygame.K_SPACE:
+                ran_pos = [random.randint(0, self.size[0]), random.randint(0, self.size[1])]
+                self.actors.append(Circle(self._display_surf, *ran_pos, 8, 4))
+            if event.key == pygame.K_b:
+                ran_pos = [random.randint(0, self.size[0]), random.randint(0, self.size[1])]
+                self.actors.append(Food(self._display_surf, *ran_pos))
 
     def on_loop(self):
         Circle.update_avg_pos()     # updates average position for Circle Class so flocking is possible

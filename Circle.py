@@ -1,5 +1,6 @@
 from Actor import Actor
 import pygame
+import vector_manipulation as vec
 
 
 class Circle(Actor):
@@ -13,12 +14,11 @@ class Circle(Actor):
 
     @classmethod
     def update_avg_pos(cls):
-        sum_pos = [0.0, 0.0]
-        for circle in cls.kin:
-            sum_pos[0] += circle.pos[0]
-            sum_pos[1] += circle.pos[1]
-        cls.avg_pos[0] = sum_pos[0] / len(cls.kin)
-        cls.avg_pos[1] = sum_pos[1] / len(cls.kin)
+        kin_pos = []
+        for i, circle in enumerate(cls.kin):
+            kin_pos.append(circle.pos)
+        sum_pos = vec.add(kin_pos)
+        cls.avg_pos = vec.divide(sum_pos, len(kin_pos))
 
     def on_draw(self):
         pygame.draw.circle(self.my_surface, self.color, self.pos, self.size[0]/2)
