@@ -7,6 +7,7 @@ class Actor:
     population = []
     avg_pos = [0.0, 0.0]
 
+
     def __init__(self, surface, x, y, sz=10, dx=0.2, dy=-0.1, f_s=0):
         self.population.append(self)
         self.my_surface = surface
@@ -21,6 +22,10 @@ class Actor:
         self.border_zone_abs = [int(self.screensize[0]*self.border_zone), int(self.screensize[1]*self.border_zone)]
         self.flocking_strength = f_s
         self.food_meter = 100
+        self.food_meter_max = 100
+
+    def __del__(self):
+        self.population.remove(self)
 
     @classmethod
     def has_same_sign(cls, x, y):
@@ -34,9 +39,17 @@ class Actor:
             return True
         return False
 
+    def is_starving(self):
+        if self.food_meter <= 0:
+            return True
+
     def on_draw(self):
         body = pygame.Rect(self.pos, self.size)
         pygame.draw.rect(self.my_surface, self.color, body)
+
+    def food_decay(self):
+        self.food_meter -= 1/10
+        self.color = (55+(round(self.food_meter)*2), 0, 0)
 
         # checking all 4 sides of the screen, if Actor is to close he will get pushed away
     def push_to_center(self):
@@ -83,6 +96,7 @@ class Actor:
         # function which will be externally called every tick
     def on_step(self):
         self.set_max_speed(self.mx_speed)
+        self.food_decay()
         self.push_to_center()
         self.flock()
         self.collision()
