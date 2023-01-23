@@ -9,6 +9,7 @@ class App:
     def __init__(self):
         self.clock = pygame.time.Clock()
         self.fps = 30
+        self.time_per_frame = 1000 / self.fps
         self.actors = []
         self.colors = {"RED": (255, 0, 0), "YELLOW": (255, 255, 0)}
         self._running = True
@@ -33,12 +34,14 @@ class App:
                 self.actors.append(Food(self._display_surf, *ran_pos))
 
     def on_loop(self):
+        for actor in self.actors:
+            actor.on_step()
         Circle.update_avg_pos()     # updates average position for Circle Class so flocking is possible
 
     def on_render(self):
         self._display_surf.fill(self.colors.get("YELLOW"))                  # DRAWS BACKGROUND
         for actor in self.actors:                                           # DRAWS ACTORS
-            actor.on_step()
+            actor.on_draw()
         pygame.display.update()
 
     def on_cleanup(self):
@@ -48,13 +51,24 @@ class App:
         if self.on_init() == False:
             self._running = False
 
+        previous = pygame.time.get_ticks()
+        lag = 0.0
+
         while (self._running):
+            current = pygame.time.get_ticks()
+            elapsed = current - previous
+            lag += elapsed
+            previous = current
+
             for event in pygame.event.get():
                 self.on_event(event)
 
-            self.on_loop()
+            while lag > self.time_per_frame:
+                self.on_loop()
+                lag -= self.time_per_frame
             self.on_render()
-            self.clock.tick(self.fps)
+
+            print(clock.get_fps())
         self.on_cleanup()
 
 

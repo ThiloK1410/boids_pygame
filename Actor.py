@@ -20,6 +20,7 @@ class Actor:
         self.border_push_force = 0.5      # TODO: maybe change border_zone or push_force in relation to mx_speed
         self.border_zone_abs = [int(self.screensize[0]*self.border_zone), int(self.screensize[1]*self.border_zone)]
         self.flocking_strength = f_s
+        self.food_meter = 100
 
     @classmethod
     def has_same_sign(cls, x, y):
@@ -86,5 +87,4 @@ class Actor:
         self.flock()
         self.collision()
         self.move()
-        self.on_draw()
 
