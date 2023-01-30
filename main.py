@@ -27,10 +27,9 @@ class App:
             if event.key == pygame.K_SPACE:
                 ran_pos = [random.randint(0, self.size[0]), random.randint(0, self.size[1])]
                 new_circle = Circle(self._display_surf, *ran_pos, 8, 4)
-                #self.actors.append(Circle(self._display_surf, *ran_pos, 8, 4))
             if event.key == pygame.K_b:
                 ran_pos = [random.randint(0, self.size[0]), random.randint(0, self.size[1])]
-                self.actors.append(Food(self._display_surf, *ran_pos))
+                new_food = Food(self._display_surf, *ran_pos)
 
     def on_loop(self):
         for i, actor in enumerate(Actor.population):

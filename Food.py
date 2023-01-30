@@ -2,6 +2,7 @@ import pygame
 from Actor import Actor
 import vector_manipulation as vec
 
+
 class Food(Actor):
     def __init__(self, surface, x, y):
         sz, dx, dy = 20, 0, 0
@@ -14,3 +15,6 @@ class Food(Actor):
     def move(self):     # Food will be able to move but only when forced
         self.pos = vec.add([self.pos, self.mov])
         self.mov = [0.0, 0.0]
+
+    def food_decay(self):
+        pass

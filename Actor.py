@@ -7,7 +7,6 @@ class Actor:
     population = []
     avg_pos = [0.0, 0.0]
 
-
     def __init__(self, surface, x, y, sz=10, dx=0.2, dy=-0.1, f_s=0):
         self.population.append(self)
         self.my_surface = surface
@@ -24,8 +23,6 @@ class Actor:
         self.food_meter = 100
         self.food_meter_max = 100
 
-    def __del__(self):
-        self.population.remove(self)
 
     @classmethod
     def has_same_sign(cls, x, y):

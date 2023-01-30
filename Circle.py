@@ -9,7 +9,6 @@ class Circle(Actor):
 
     def __init__(self, surface, x, y, dx=0, dy=0, sz=20):
         super().__init__(surface, x, y, sz, dx, dy)
-        self.avg_pos = [self.screensize[0]/2, self.screensize[1]/2]
         self.kin.append(self)
         self.flocking_strength = 0.001
 
