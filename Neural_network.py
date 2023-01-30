@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-class LayerDense:
+class Layer:
     def __init__(self, n_inputs, n_neurons, sigma_weights, sigma_biases):
         self.outputs = None
         self.n_inputs = n_inputs
@@ -15,8 +15,6 @@ class LayerDense:
         if not len(inputs) == self.n_inputs:
             raise ValueError("network layer got wrong number of inputs")
         self.outputs = np.squeeze(np.dot(inputs, self.weights) + self.biases)
-
-        print(self.outputs.shape)
 
     def show_weights(self):
         print(self.weights.shape)
@@ -35,7 +33,7 @@ class NeuralNetwork:
         for i, layer_size in enumerate(shape):
             if i == 0:
                 continue
-            self.network.append(LayerDense(shape[i-1], shape[i], sigma_weights, sigma_biases))
+            self.network.append(Layer(shape[i - 1], shape[i], sigma_weights, sigma_biases))
 
     def calculate(self, inputs):
         temp = None
@@ -56,6 +54,5 @@ class NeuralNetwork:
 
 if __name__ == "__main__":
     network = NeuralNetwork([4, 2, 3, 2, 2])
-    network.print_network()
     network.calculate([1, 2, 3, 4])
     print(network.outputs)
